@@ -1,0 +1,34 @@
+class ElevatorBox:
+    
+    def __init__(self, num_floors):
+        self.current_floor = 0
+        self.direction = None  # 'up', 'down', o None (si está parado)
+        self.internal_buttons = ButtonArray(num_floors, is_elevator_panel=True)
+        self.display = Display()
+
+    def move(self):
+        # Lógica para mover el elevador
+        if self.direction == 'up':
+            self.current_floor += 1
+        elif self.direction == 'down':
+            self.current_floor -= 1
+        self.display.update(self.current_floor, self.direction)
+        self.display.show()
+
+    def request_floor(self, floor):
+        # Lógica para manejar una solicitud de piso
+        button = self.internal_buttons.get_button(floor)
+        if button:
+            button.press()
+            # Aquí podrías agregar lógica para determinar la dirección y mover el elevador
+if __name__ == '__main__':
+
+    elevator = ElevatorBox(10)
+    elevator.request_floor(5)
+    elevator.move()
+
+    elevator.request_floor(3)
+    elevator.move()
+
+    elevator.request_floor(7)
+    elevator.move()
